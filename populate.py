@@ -49,7 +49,7 @@ def main():
 	hourly = 'http://services.swpc.noaa.gov/products/solar-wind/plasma-2-hour.json'
 	daily = 'http://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json'
 	weekly = 'http://services.swpc.noaa.gov/products/solar-wind/plasma-7-day.json'
-	
+
 	try:
 		if sys.argv[1] == 'latest':
 			insertData(retrieveData(latest))
@@ -62,7 +62,7 @@ def main():
 		else:
 			sys.exit("Error: InvalidTimePeriod: ('latest','hour','day','week')")
 	except IndexError:
-		# Create the database, and backfill for the last week. Cron will handle the minutae
+		# Create the database, and backfill for the last week. Cron will handle the minutiae
 		createDB()
 		insertData(retrieveData(weekly))
 
