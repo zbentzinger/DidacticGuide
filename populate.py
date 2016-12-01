@@ -33,7 +33,7 @@ def insertData(json):
 	try:
 		with connection:
 			connection.executemany(insert_statement, json)
-	except:
+	except sqlite3.OperationalError:
 		raise
 
 def retrieveData(url):

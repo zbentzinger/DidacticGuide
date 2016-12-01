@@ -1,0 +1,2 @@
+* * * * * cd /database && python /project/populate.py latest
+
