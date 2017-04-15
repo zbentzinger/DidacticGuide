@@ -7,4 +7,4 @@ COPY crontab /etc/crontabs/root
 COPY populate.py requirements.txt /project/
 RUN pip3 install -r /project/requirements.txt
 
-CMD python /project/populate.py && crond -L /var/log/syslog && tail -f /var/log/syslog
+CMD crond -L /var/log/syslog && python /project/populate.py && tail -f /var/log/syslog
