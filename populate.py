@@ -1,35 +1,24 @@
+"""
+TODO: implement logging module because duh.
+"""
+
 import requests
 import sqlite3
 import sys
 #import timeit
 
-
-def createDB():
-	"""Creates a sqlite database"""
-	open('data.db', 'a').close()
-	create_statement = """
-		CREATE TABLE 'plasma' (
-		`timestamp` TEXT UNIQUE,
-		`density` REAL,
-		`speed` REAL,
-		`temperature`INTEGER
-		);
+def insertPlasmaData(json):
 	"""
-	connection = sqlite3.connect('data.db')
-	try:
-		with connection:
-			connection.execute(create_statement)
-	except sqlite3.OperationalError:
-		# Database has already been setup
-		pass
+	Insert data into the sqlite database. Must pass a valid JSON object.
+	Does not return anything.
 
-def insertData(json):
-	"""Insert data into the sqlite database. Must pass a valid JSON object"""
+	param: json (dict) valid JSON object that consists of four keys.
+	"""
 	insert_statement = """
-		INSERT OR IGNORE INTO `plasma` (`timestamp`, `density`, `speed`, `temperature`) 
+		INSERT OR IGNORE INTO `PLASMA` (`TIMESTAMP`, `DENSITY`, `SPEED`, `TEMPERATURE`) 
 		VALUES (?,?,?,?);
 	"""
-	connection = sqlite3.connect('data.db')
+	connection = sqlite3.connect('noaa.db')
 	try:
 		with connection:
 			connection.executemany(insert_statement, json)
@@ -37,7 +26,13 @@ def insertData(json):
 		raise
 
 def retrieveData(url):
-	"""GET the JSON from noaa.gov and format it"""
+	"""
+	TODO: create method to standardize data.
+	Gets plasma speed and density from NOAA.gov that can be stored.
+	
+	param: url (string) valid http URL to noaa.gov
+	return: data (dict) formatted JSON
+ 	"""
 	request = requests.get(url)
 	data = request.json()
 	data.pop(0)
@@ -52,19 +47,18 @@ def main():
 
 	try:
 		if sys.argv[1] == 'latest':
-			insertData(retrieveData(latest))
+			insertPlasmaData(retrieveData(latest))
 		elif sys.argv[1] == 'hour':
-			insertData(retrieveData(hourly))
+			insertPlasmaData(retrieveData(hourly))
 		elif sys.argv[1] == 'day':
-			insertData(retrieveData(daily))
+			insertPlasmaData(retrieveData(daily))
 		elif sys.argv[1] == 'week':
-			insertData(retrieveData(weekly))
+			insertPlasmaData(retrieveData(weekly))
 		else:
 			sys.exit("Error: InvalidTimePeriod: ('latest','hour','day','week')")
 	except IndexError:
-		# Create the database, and backfill for the last week. Cron will handle the minutiae
-		createDB()
-		insertData(retrieveData(weekly))
+		# Backfill for the last week. Cron will handle the minutiae
+		insertPlasmaData(retrieveData(weekly))
 
 if __name__ == '__main__':
 	main()
