@@ -35,7 +35,7 @@ def retrieveData(url):
  	"""
 	request = requests.get(url)
 	data = request.json()
-	data.pop(0)
+	data.pop(0) #Don't need NOAAs schema definition.
 	return data
 
 def main():
