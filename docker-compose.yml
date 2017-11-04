@@ -1,0 +1,9 @@
+version: "3"
+services:
+  
+  populator:
+    build:
+      context: ./
+      dockerfile: Dockerfile-populator
+    volumes: 
+      - "./:/database"

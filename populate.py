@@ -18,7 +18,7 @@ def insertPlasmaData(json):
 		INSERT OR IGNORE INTO `PLASMA` (`TIMESTAMP`, `DENSITY`, `SPEED`, `TEMPERATURE`) 
 		VALUES (?,?,?,?);
 	"""
-	connection = sqlite3.connect('noaa.db')
+	connection = sqlite3.connect('./database/noaa.db')
 	try:
 		with connection:
 			connection.executemany(insert_statement, json)

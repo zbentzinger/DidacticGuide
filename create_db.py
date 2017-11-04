@@ -4,6 +4,7 @@ Sets up data containers for storing NOAA data.
 This only needs to be ran once, prior to running the populate scripts.
 """
 
+import os
 import sqlite3
 
 
@@ -23,7 +24,10 @@ def main():
 		);
 	"""
 
-	connection = sqlite3.connect('noaa.db')
+	dbPath = "./database/noaa.db"
+
+	os.makedirs(os.path.dirname(dbPath), exist_ok=True)
+	connection = sqlite3.connect(dbPath)
 	connection.execute(create_statement)
 
 
