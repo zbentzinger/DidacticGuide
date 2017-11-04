@@ -22,7 +22,7 @@ Setup
 
 Docker Usage
 --------------
-- `docker-compose up -d``-d` is optional
+- `docker-compose up -d` -d is optional
 
 The first time the docker container is spun up, it will call NOAA for the last week to create a bit of seed data. From there, it will call NOAA's API every minute and insert said data into the `./database/noaa.db` SQLite database. 
 
