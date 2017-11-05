@@ -34,9 +34,9 @@ This script can also be ran manually:
 
 `python popuate.py latest|hour|day|week`
 
-- latest: calls NOAA's plasma-5-minute endpoint
-- hour: plasma-2-hour
-- day: plasma-1-day
-- week[default]: plasma-7-day
+- latest: calls NOAA's plasma-5-minute and mag-5-minute endpoints
+- hour: plasma-2-hour and mag-2-hour
+- day: plasma-1-day and mag-1-day
+- week[default]: plasma-7-day and mag-7-day
 
 Running the script without specifying any command line args will automatically call the `week` arg.
