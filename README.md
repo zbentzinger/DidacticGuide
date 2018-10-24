@@ -1,4 +1,4 @@
-didactic-guide (Still in search of a name)
+didactic-guide (Still in search of a name) - Moved to: https://gitlab.com/zbentzinger
 ==========================================
 
 This is currently a work in progress. The aim is to use public domain data that noaa.gov provides
